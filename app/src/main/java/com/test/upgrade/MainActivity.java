@@ -9,6 +9,9 @@ import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout mLinearLayout;
     private NetWorkUtils mNetWorkUtils;
     private  boolean mIsClicked=false;
+    private EventHandler mEventtHandler;
+    private TextView mTextViewTip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +65,32 @@ public class MainActivity extends AppCompatActivity {
             initData();
         }
     }
+    private  class EventHandler extends Handler{
 
+        public EventHandler(Looper mainLooper) {
+
+        }
+
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    mTextViewTip.setText("连接成功，长传文件中。。。。");
+                    break;
+                case 2:
+                    if(msg.arg1==0){
+                        mTextViewTip.setText("文件升级成功, 正在重启系统中。。。");
+                    }else {
+                        mTextViewTip.setText("文件升级失败  ！！！！！！！！");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     private void initData() {
         mNetWorkUtils = new NetWorkUtils(this);
-
+        mEventtHandler = new EventHandler(Looper.getMainLooper());
         if(mNetWorkUtils.isNetworkEnable()){
             mConnectStateTextView.setText(mNetWorkUtils.getCurrentNetworkType());
         }
@@ -83,10 +111,11 @@ public class MainActivity extends AppCompatActivity {
         mSsidTextView = (TextView) findViewById(R.id.wifi_info_ssid);
         mSerAddrTextView = (TextView) findViewById(R.id.wifi_info_ser_addr);
         mLinearLayout = (LinearLayout) findViewById(R.id.wifi_info);
+        mTextViewTip = (TextView) findViewById(R.id.tip_info);
     }
 
     public void upgrade(View view){
-        final HttpUtils httpUtils = new HttpUtils(this);
+        final HttpUtils httpUtils = new HttpUtils(this,mEventtHandler);
         if(!"Wi-Fi".equals(mNetWorkUtils.getCurrentNetworkType())){
             Toast.makeText(this, "请连接WIFI", Toast.LENGTH_SHORT).show();
             return;

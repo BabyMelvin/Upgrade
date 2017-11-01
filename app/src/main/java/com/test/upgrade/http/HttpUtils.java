@@ -1,6 +1,8 @@
 package com.test.upgrade.http;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.test.upgrade.R;
@@ -23,9 +25,11 @@ public class HttpUtils {
     private static final String TAG = "HttpUtils";
     private Context mContext;
     private boolean mIsConnected=false;
+    private static Handler mHandler;
 
-    public HttpUtils(Context context){
+    public HttpUtils(Context context, Handler eventHandler){
        mContext=context;
+        mHandler=eventHandler;
     }
 
     public String submitPostData(){
@@ -83,7 +87,7 @@ public class HttpUtils {
           //  outputStream.write(postFlag.toString().getBytes());
             //img content
 
-            InputStream inputStreamContent=mContext.getResources().openRawResource(R.raw.cm5000_823amt11v2222t);
+            InputStream inputStreamContent=mContext.getResources().openRawResource(R.raw.tclinux);
             byte[] bytes=new byte[1024];
            // int length=inputStreamContent.available();
          //   byte[] bytes=new byte[length];
@@ -96,7 +100,7 @@ public class HttpUtils {
             // StringBuffer postFlag=new StringBuffer();
             dataOutputStream.writeBytes(boundary+enter);
             dataOutputStream.writeBytes("Content-Disposition: form-data; name="+"\"FW_UploadFile\";");
-            dataOutputStream.writeBytes("filename="+"\"CM5000-823AMT11V2222T.img\""+enter);
+            dataOutputStream.writeBytes("filename="+"\"tclinux.bin\""+enter);
             dataOutputStream.writeBytes("Content-Type: application/octet-stream"+enter+enter);
             while((length=inputStreamContent.read(bytes))!=-1){
                 dataOutputStream.write(bytes,0,length);
@@ -116,9 +120,11 @@ public class HttpUtils {
             dataOutputStream.close();
 
             int response =httpURLConnection.getResponseCode();
-
+            Message message=new Message();
             if(response==HttpURLConnection.HTTP_OK){
+                message.what=1;
                 Log.i(TAG, "submitPostData: HTTP_OK");
+                mHandler.sendMessage(message);
                 mIsConnected=true;
                 InputStream inputStream=httpURLConnection.getInputStream();
                 return dealResponseResult(inputStream);
@@ -136,6 +142,7 @@ public class HttpUtils {
     }
     public static String dealResponseResult(InputStream inputStream){
         String resultData=null;
+        Message message=new Message();
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         byte[] data=new byte[1024];
         int len=0;
@@ -148,6 +155,15 @@ public class HttpUtils {
         }
         resultData =new String(byteArrayOutputStream.toByteArray());
         Log.i(TAG, "dealResponseResult: "+resultData);
+        if(resultData.contains("升级成功")){
+            message.what=2;
+            message.arg1=0;
+            mHandler.sendMessage(message);
+        }else {
+            message.what=2;
+            message.arg1=1;
+            mHandler.sendMessage(message);
+        }
         return resultData;
     }
 }

@@ -13,6 +13,8 @@ public class NetworkReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.startActivity(new Intent(context,MainActivity.class));
+        Intent intentS=new Intent(context,MainActivity.class);
+        intentS.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intentS);
     }
 }

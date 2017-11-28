@@ -23,12 +23,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="网络连接状态 "/>
+                android:text="网络连接状态            "/>
             <TextView
                 android:id="@+id/connect_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="未连接"
+                android:text="无网络未连接"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SSID                "/>
+                    android:text="无线名称                   "/>
                 <TextView
                     android:id="@+id/wifi_info_ssid"
                     android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IpAddr            "/>
+                    android:text="获得IP地址                 "/>
                 <TextView
                     android:id="@+id/wifi_info_ip_addr"
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SerAddr             "/>
+                    android:text="服务器IP地址             "/>
                 <TextView
                     android:id="@+id/wifi_info_ser_addr"
                     android:layout_width="wrap_content"
@@ -82,6 +82,29 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp"/>
             </LinearLayout>
+            <LinearLayout
+                android:paddingTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="升级文件状态              "/>
+                <TextView
+                    android:id="@+id/file_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:text="请选择文件"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/pick_file_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择升级文件"/>
         </LinearLayout>
     </LinearLayout>
     <TextView

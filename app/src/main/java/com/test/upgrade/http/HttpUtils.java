@@ -34,7 +34,7 @@ public class HttpUtils {
     public String submitPostData(InputStream inContent){
 
         try {
-            URL url = new URL("http://192.168.1.1/upgrade.asp");
+            URL url = new URL("http://192.168.1.1/com.hg.upgrade.asp");
             String boundary="-----------------------------7e1b3242d0f6e";
             String enter="\r\n";
             mHttpURLConnection = (HttpURLConnection)url.openConnection();
@@ -47,7 +47,7 @@ public class HttpUtils {
            // httpURLConnection.setRequestProperty("Origin","http://192.168.1.1");
            // httpURLConnection.setRequestProperty("Upgrade-Insecure-Requests","1");
             mHttpURLConnection.setRequestProperty("Accept","image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*");
-            mHttpURLConnection.setRequestProperty("Referer","http://192.168.1.1/upgrade.asp");
+            mHttpURLConnection.setRequestProperty("Referer","http://192.168.1.1/com.hg.upgrade.asp");
             mHttpURLConnection.setRequestProperty("Accept-Language","zh-CN");
             mHttpURLConnection.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
             mHttpURLConnection.setRequestProperty("Content-Type","multipart/form-data;"+"boundary="+boundary);

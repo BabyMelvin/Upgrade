@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hg.upgrade.R;
 import com.test.upgrade.file.FileUriUtils;
 import com.test.upgrade.http.HttpUtils;
 import com.test.upgrade.network.NetWorkUtils;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTextViewTip.setText("连接成功，上传文件中。。。。");
                     break;
                 case 2:
+                    mIsClicked=false;
                     if(msg.arg1==0){
                         mTextViewTip.setText("文件升级成功, 正在重启系统中。。。");
                     }else {
@@ -236,18 +238,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }*/
        if(requestSuccess!=true){
-           Log.i(TAG, "upgrade: read error,cannot get the file");
+           Log.i(TAG, "com.hg.upgrade: read error,cannot get the file");
            Toast.makeText(this, "文件状态不正确，不能升级", Toast.LENGTH_SHORT).show();
            return;
        }
         if(mIsClicked==true){
-            Log.i(TAG, "upgrade: 已经出发升级，请等待");
+            Log.i(TAG, "com.hg.upgrade: 已经出发升级，请等待");
             Toast.makeText(this, "已经出发升级，请等待", Toast.LENGTH_SHORT).show();
             return;
         }
         mIsClicked=true;
-        Log.i(TAG, "upgrade: ");
-           // Log.i(TAG, "upgrade: length"+bytes.length);
+        Log.i(TAG, "com.hg.upgrade: ");
+           // Log.i(TAG, "com.hg.upgrade: length"+bytes.length);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
